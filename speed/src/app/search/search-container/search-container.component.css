@@ -1,0 +1,11 @@
+#lists {
+    display: flex;
+}
+
+#criteria-list-container {
+    flex-basis: 30%;
+}
+
+#launches-list-container {
+    flex-grow: 1;
+}

@@ -1,0 +1,6 @@
+<ul id="launches-list" class="unstyled-list">
+  <li *ngFor="let launch of filteredLaunches">
+    <span class="launch-name-text bold"> {{launch.name}} </span>
+    <span class="launch-desc-text italic"> At {{launch.location.name}} </span>
+  </li>
+</ul>

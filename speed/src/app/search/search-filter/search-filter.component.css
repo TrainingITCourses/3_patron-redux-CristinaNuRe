@@ -1,0 +1,5 @@
+input[type=text] {
+    font-size: 1em;
+    border-color: lightblue;
+    margin: 10px 0px 10px 0px;
+}

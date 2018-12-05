@@ -1,0 +1,21 @@
+<section id="filter">
+  <app-search-filter
+    (search)= "onSearch($event)">
+  </app-search-filter>
+  <app-launches-counter
+    [count]="launchesCount">
+  </app-launches-counter>
+</section>
+<section id="lists">
+  <section id="criteria-list-container">
+    <app-criteria-list
+      [filteredCriteria]="filteredCriteria"
+      (searchLaunches)="onSearchLaunches($event)">
+    </app-criteria-list>
+  </section>
+  <section id="launches-list-container">
+    <app-launches-list
+      [filteredLaunches]="filteredLaunches" >
+    </app-launches-list>
+  </section>
+</section>

@@ -1,0 +1,17 @@
+<div>
+  <label>
+    <input type="radio" [(ngModel)]="criteria" value="agency" (change)="search.next({criteria: 'agency', text: searchText.value})">
+    Agency
+  </label><br/>
+  <label>
+    <input type="radio" [(ngModel)]="criteria" value="status" (change)="search.next({criteria: 'status', text: searchText.value})">
+    Status
+  </label><br/>
+  <label>
+    <input type="radio" [(ngModel)]="criteria" value="type" (change)="search.next({criteria: 'type', text: searchText.value})">
+    Type
+  </label><br/>
+</div>
+<div>
+  <input #searchText type="text" placeHolder="Search..." (keyup)="search.next({criteria: criteria, text: searchText.value})">
+</div>
