@@ -1,11 +1,17 @@
 import { Launch } from "./launch";
+import { Agency } from "./agency";
+import { Status } from "./status";
 
 export interface Global {
-    criteriaResults: any[];
+    agencies: Agency[];
+    launchStatus: Status[];
+    missionTypes: any[];
     launches: Launch[];
   }
   
   export const globalInitialState: Global = {
-    criteriaResults: [],
+    agencies: [],
+    launchStatus: [],
+    missionTypes: [],    
     launches: []
   };

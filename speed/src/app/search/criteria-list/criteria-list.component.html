@@ -1,6 +1,6 @@
 <ul id="criteria-list" class="unstyled-list">
-  <li *ngFor="let result of filteredCriteria?.filteredResults">
-    <button class="link" (click)="searchLaunches.next({criteria: filteredCriteria.criteria, filterId: result.id})">
+  <li *ngFor="let result of filteredCriteria?.results">
+    <button class="link" (click)="searchLaunches.next({criteria: filteredCriteria.type, filterId: result.id})">
         {{result.name}}
     </button>
   </li>

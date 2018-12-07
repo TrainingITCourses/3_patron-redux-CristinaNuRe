@@ -6,31 +6,50 @@ import { environment } from 'src/environments/environment';
 import { Agency } from '../models/agency';
 import { Launch } from '../models/launch';
 import { Status } from '../models/status';
+import { GlobalStoreService } from './global-store.service';
+import { LoadAgencies, LoadMissionTypes, LoadLaunches } from '../global-store.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  private agenciesEndPoint: string = '/assets/data/agencies.json';
+  private launchStatusEndPoint: string = '/assets/data/launchstatus.json';
+  private missionTypesEndPoint: string = '/assets/data/missiontypes.json';
+  private launchesEndPoint: string = '/assets/data/launches.json';
 
-  public getAgencies(): Observable<Agency[]> {
-    return this.http.get(environment.apiUrl + '/assets/data/agencies.json')
-     .pipe(map((res: any) => res.agencies));
+  constructor(private http: HttpClient, private globalStore: GlobalStoreService) { }
+
+  public getAgencies = () => {
+    this.http.get(environment.apiUrl + this.agenciesEndPoint)
+      .pipe(map((result: any) => result.agencies))
+      .subscribe(agencies => {
+        this.globalStore.dispatch(new LoadAgencies(agencies))
+      });
   }
 
-  public getLaunches(): Observable<Launch[]> {
-    return this.http.get(environment.apiUrl + '/assets/data/launches.json')
-    .pipe(map((res: any) => res.launches));
+  public getLaunchStatus = () => {
+    this.http.get(environment.apiUrl + this.launchStatusEndPoint)
+      .pipe(map((result: any) => result.status))
+      .subscribe(launchStatus => {
+        this.globalStore.dispatch(new launchStatus(launchStatus))
+      });
   }
 
-  public getLaunchStatus(): Observable<Status[]> {
-    return this.http.get(environment.apiUrl + '/assets/data/launchstatus.json')
-    .pipe(map((res: any) => res.types));
+  public getMissionTypes = () => {
+    this.http.get(environment.apiUrl + this.missionTypesEndPoint)
+      .pipe(map((result: any) => result.types))
+      .subscribe(missionTypes => {
+        this.globalStore.dispatch(new LoadMissionTypes(missionTypes));
+      });
   }
 
-  public getMissionTypes(): Observable<Status[]> {
-    return this.http.get(environment.apiUrl + '/assets/data/missiontypes.json')
-    .pipe(map((res: any) => res.types));
+  public getLaunches = () => {
+    this.http.get(environment.apiUrl + this.launchesEndPoint)
+      .pipe(map((result: any) => result.launches))
+      .subscribe(launches => {
+        this.globalStore.dispatch(new LoadLaunches(launches));
+      });
   }
 }

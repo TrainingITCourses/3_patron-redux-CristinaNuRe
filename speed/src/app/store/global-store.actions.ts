@@ -1,21 +1,36 @@
 export enum GlobalActionTypes {
-    LoadCriteriaResults,
+    LoadAgencies,
+    LoadLaunchStatus,
+    LoadMissionTypes,
     LoadLaunches
 }
 
 export interface Action {
     readonly type: GlobalActionTypes;
-    readonly payload?: any;
+    readonly payload: any;
 }
 
-export class LoadCriteriaResults implements Action {
-    public type = GlobalActionTypes.LoadCriteriaResults;
+export class LoadAgencies implements Action {
+    public readonly type = GlobalActionTypes.LoadAgencies;
+    constructor(public readonly payload: any[]) {}
+}
+
+export class LoadLaunchStatus implements Action {
+    public readonly type = GlobalActionTypes.LoadLaunchStatus;
+    constructor(public readonly payload: any[]) {}
+}
+
+export class LoadMissionTypes implements Action {
+    public readonly type = GlobalActionTypes.LoadMissionTypes;
     constructor(public readonly payload: any[]) {}
 }
 
 export class LoadLaunches implements Action {
-    public type = GlobalActionTypes.LoadLaunches;
+    public readonly type = GlobalActionTypes.LoadLaunches;
     constructor(public readonly payload: any[]) {}
 }
 
-export type GlobalActions = LoadCriteriaResults | LoadLaunches;
+export type GlobalActions = LoadAgencies 
+    | LoadLaunchStatus 
+    | LoadMissionTypes 
+    | LoadLaunches;

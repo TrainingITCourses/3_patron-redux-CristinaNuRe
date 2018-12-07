@@ -11,20 +11,29 @@ import { Global, globalInitialState } from '../models/global';
 export class GlobalStoreService {
 
     private state: Global = { ...globalInitialState };
-    private criteriaResults$ = new BehaviorSubject<any>(this.state.criteriaResults);
+    private agencies$ = new BehaviorSubject<any>(this.state.agencies);
+    private launchStatus$ = new BehaviorSubject<any>(this.state.launchStatus);
+    private missionTypes$ = new BehaviorSubject<any>(this.state.missionTypes);
     private launches$ = new BehaviorSubject<any>(this.state.launches);
 
     constructor() {};
 
     public dispatch = (action: GlobalActions) => {
+        console.log('dispatching...', action);
         this.state = globalStoreReducer(this.state, action);
 
         switch(action.type) {
-            case GlobalActionTypes.LoadCriteriaResults:
-                this.criteriaResults$.next(this.getSnapshot(GlobalSlideTypes.criteriaResults));
+            case GlobalActionTypes.LoadAgencies:
+                this.agencies$.next([...this.state.agencies]);
                 break;
+            case GlobalActionTypes.LoadLaunchStatus:
+                this.launchStatus$.next([...this.state.launchStatus]);
+                break;
+            case GlobalActionTypes.LoadMissionTypes:
+                this.missionTypes$.next([...this.state.missionTypes]);
+                break;                
             case GlobalActionTypes.LoadLaunches:
-                this.launches$.next(this.getSnapshot(GlobalSlideTypes.launches));
+                this.launches$.next([...this.state.launches]);
                 break;
         }        
     }
@@ -32,8 +41,12 @@ export class GlobalStoreService {
     public getSnapshot = (slice: GlobalSlideTypes) => {
 
         switch(slice) {
-            case GlobalSlideTypes.criteriaResults:
-                return [... this.state.criteriaResults];
+            case GlobalSlideTypes.agencies:
+                return [... this.state.agencies];
+            case GlobalSlideTypes.launchStatus:
+                return [... this.state.launchStatus];
+            case GlobalSlideTypes.missionTypes:
+                return [... this.state.missionTypes];                
             case GlobalSlideTypes.launches:
                 return [... this.state.launches];
         }
@@ -42,8 +55,12 @@ export class GlobalStoreService {
     public select$ = (slice: GlobalSlideTypes) => {
 
         switch(slice) {
-            case GlobalSlideTypes.criteriaResults:
-                return this.criteriaResults$.asObservable();
+            case GlobalSlideTypes.agencies:
+                return this.agencies$.asObservable();
+            case GlobalSlideTypes.launchStatus:
+                return this.launchStatus$.asObservable();
+            case GlobalSlideTypes.missionTypes:
+                return this.missionTypes$.asObservable();                
             case GlobalSlideTypes.launches:
                 return this.launches$.asObservable();
         }
@@ -51,7 +68,9 @@ export class GlobalStoreService {
 }
 
 export enum GlobalSlideTypes {
-    criteriaResults,
+    agencies,
+    launchStatus,
+    missionTypes,
     launches
 }
 
