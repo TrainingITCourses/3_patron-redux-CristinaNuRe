@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    font-family: sans-serif;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.unstyled-list {
+    list-style: none;
+}
+
+button.link {
+    display: block;
+    border: none;
+    background: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
+button.link:hover {
+    text-decoration: underline;
+}

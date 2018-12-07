@@ -1,0 +1,18 @@
+#launches-list {
+    padding: 0px 0px 0px 20px;
+}
+
+#launches-list li {
+    padding: 5px 0px 5px 0px;
+    border-bottom: 2px solid lightblue;
+}
+
+.launch-name-text {
+    display: block;
+    font: 1em;
+}
+
+.launch-desc-text {
+    display: block;
+    font: 0.8em;
+}

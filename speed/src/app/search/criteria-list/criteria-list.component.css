@@ -1,0 +1,11 @@
+#criteria-list {
+    padding: 0px;
+}
+
+#criteria-list li {
+    padding: 5px 0px 5px 0px;
+}
+
+#criteria-list li button {
+    padding: 5px;
+}
