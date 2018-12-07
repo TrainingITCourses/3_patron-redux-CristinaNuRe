@@ -3,7 +3,7 @@ import { CriteriaTypes } from 'src/app/store/models/criteriaTypes';
 import { Criteria } from 'src/app/store/models/criteria';
 import { Launch } from 'src/app/store/models/launch';
 import { ApiService } from 'src/app/store/services/api.service';
-import { GlobalStoreService, GlobalSlideTypes } from 'src/app/store/services/global-store.service';
+import { GlobalStoreService, GlobalSliceTypes } from 'src/app/store/services/global-store.service';
 import { GlobalActionTypes, 
     LoadAgencies, 
     LoadMissionTypes, 
@@ -21,7 +21,7 @@ import { Status } from 'src/app/store/models/status';
 export class SearchContainerComponent implements OnInit {
 
   public agencies: Agency[];
-  public launchStatus: Status[];
+  public launchStatus: any[];
   public missionTypes: any[];
   public launches: Launch[];
   public filteredCriteria: Criteria; // = new Criteria(CriteriaTypes.agency, []);
@@ -31,18 +31,23 @@ export class SearchContainerComponent implements OnInit {
   constructor(private api: ApiService, private globalStore: GlobalStoreService) { }
 
   ngOnInit() {
-    this.globalStore.select$(GlobalSlideTypes.agencies)
+
+    this.api.getAgencies();
+    this.api.getLaunchStatus();
+    this.api.getMissionTypes();
+    this.api.getLaunches();
+
+    this.globalStore.select$(GlobalSliceTypes.agencies)
       .subscribe(agencies => this.agencies = agencies);
 
-    this.globalStore.select$(GlobalSlideTypes.launchStatus)
+    this.globalStore.select$(GlobalSliceTypes.launchStatus)
       .subscribe(launchStatus => this.launchStatus = launchStatus);
     
-    this.globalStore.select$(GlobalSlideTypes.missionTypes)
+    this.globalStore.select$(GlobalSliceTypes.missionTypes)
       .subscribe(missionTypes => this.missionTypes = missionTypes);
-  }
 
-  private clearFilteredCriteriaValues() {
-    this.filteredCriteria.results = [];
+    this.globalStore.select$(GlobalSliceTypes.launches)
+      .subscribe(launches => this.launches = launches);
   }
 
   private clearFilteredLaunches() {
@@ -52,18 +57,13 @@ export class SearchContainerComponent implements OnInit {
 
   public onSearch(searchParams: {criteria: string, text: string}) {
     
-    if (searchParams.text.length > 0) {
-
-      // TODO
-      //this.store.dispatch();
-
       const searchText: string = searchParams.text.toLowerCase();
       const searchCriteria: string = searchParams.criteria.toLowerCase();
 
       this.clearFilteredLaunches();
 
       switch(searchCriteria) { 
-        case 'agency': 
+        case 'agency':
           this.filteredCriteria = new Criteria(
             CriteriaTypes.agency, 
             this.getFilteredResultsByName(this.agencies, searchText));
@@ -79,16 +79,9 @@ export class SearchContainerComponent implements OnInit {
             this.getFilteredResultsByName(this.missionTypes, searchText));
           break;
       }
-
-    } else {
-      this.clearFilteredCriteriaValues();
-    }
   }
 
   public onSearchLaunches(searchParams: {criteria: CriteriaTypes, filterId: number}) {
-
-      // TODO
-      // this.store.dispatch();
 
     this.filteredLaunches = this.launches.filter((launch: Launch) => {
       switch(searchParams.criteria) {
@@ -111,7 +104,12 @@ export class SearchContainerComponent implements OnInit {
   }
 
   private getFilteredResultsByName(results: any[], name: string): any[] {
-    return results.filter(result =>
-      result.name.toLowerCase().includes(name));
+
+    if (name.length > 0) {
+      return results.filter(result => 
+        result.name.toLowerCase().includes(name));
+    } else {
+      return [];
+    }
   }
 }

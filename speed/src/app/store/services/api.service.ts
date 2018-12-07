@@ -7,7 +7,7 @@ import { Agency } from '../models/agency';
 import { Launch } from '../models/launch';
 import { Status } from '../models/status';
 import { GlobalStoreService } from './global-store.service';
-import { LoadAgencies, LoadMissionTypes, LoadLaunches } from '../global-store.actions';
+import { LoadAgencies, LoadLaunchStatus, LoadMissionTypes, LoadLaunches } from '../global-store.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +31,9 @@ export class ApiService {
 
   public getLaunchStatus = () => {
     this.http.get(environment.apiUrl + this.launchStatusEndPoint)
-      .pipe(map((result: any) => result.status))
+      .pipe(map((result: any) => result.types))
       .subscribe(launchStatus => {
-        this.globalStore.dispatch(new launchStatus(launchStatus))
+        this.globalStore.dispatch(new LoadLaunchStatus(launchStatus))
       });
   }
 

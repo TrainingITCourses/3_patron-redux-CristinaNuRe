@@ -38,36 +38,36 @@ export class GlobalStoreService {
         }        
     }
 
-    public getSnapshot = (slice: GlobalSlideTypes) => {
+    public getSnapshot = (slice: GlobalSliceTypes) => {
 
         switch(slice) {
-            case GlobalSlideTypes.agencies:
+            case GlobalSliceTypes.agencies:
                 return [... this.state.agencies];
-            case GlobalSlideTypes.launchStatus:
+            case GlobalSliceTypes.launchStatus:
                 return [... this.state.launchStatus];
-            case GlobalSlideTypes.missionTypes:
+            case GlobalSliceTypes.missionTypes:
                 return [... this.state.missionTypes];                
-            case GlobalSlideTypes.launches:
+            case GlobalSliceTypes.launches:
                 return [... this.state.launches];
         }
     };
 
-    public select$ = (slice: GlobalSlideTypes) => {
+    public select$ = (slice: GlobalSliceTypes) => {
 
         switch(slice) {
-            case GlobalSlideTypes.agencies:
+            case GlobalSliceTypes.agencies:
                 return this.agencies$.asObservable();
-            case GlobalSlideTypes.launchStatus:
+            case GlobalSliceTypes.launchStatus:
                 return this.launchStatus$.asObservable();
-            case GlobalSlideTypes.missionTypes:
+            case GlobalSliceTypes.missionTypes:
                 return this.missionTypes$.asObservable();                
-            case GlobalSlideTypes.launches:
+            case GlobalSliceTypes.launches:
                 return this.launches$.asObservable();
         }
     };
 }
 
-export enum GlobalSlideTypes {
+export enum GlobalSliceTypes {
     agencies,
     launchStatus,
     missionTypes,
